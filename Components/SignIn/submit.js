@@ -18,7 +18,7 @@ const submit=(values)=> {
     //   })
     // } else {
       actions.auth(values.Email,values.Password);
-      window.alert(`You submitted:\n\n${JSON.stringify(values, null, 2)}`)
+      alert(`You submitted:\n\n${JSON.stringify(values, null, 2)}`)
       console.log(values);
       
  

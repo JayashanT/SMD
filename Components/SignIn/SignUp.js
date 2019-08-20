@@ -51,10 +51,6 @@ class RegisterForm extends Component{
     }
 
     render(){
-        // const submit=value=>{
-        //     console.log(value)
-        //     Alert.alert(`validation successful ${JSON.stringify(value)}`);
-        // }
         const {submitting,handleSubmit,onSubmit}=this.props;
         console.log(submitting);
         return(

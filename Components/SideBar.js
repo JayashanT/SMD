@@ -2,6 +2,8 @@ import React,{Component} from "react";
 // import MenuDrawer from 'react-native-side-drawer';
 import {View,StyleSheet,Text,TouchableOpacity,Image} from 'react-native';
 import {Actions} from 'react-native-router-flux';
+import {store} from './Store/Store';
+import * as actions from './Store/Actions/';
 
 export default class SideBar extends Component{
     constructor(props) {
@@ -37,11 +39,23 @@ export default class SideBar extends Component{
                             height:45,width:'100%',textAlign:'left',padding:10
                         }}>Current Order Details</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={()=>Actions.Status()} style={{alignItems:'center',paddingTop:10,paddingBottom:10}}>
+                    <TouchableOpacity onPress={()=>store.dispatch(actions.logout())} style={{alignItems:'center',paddingTop:10,paddingBottom:10}}>
                         <Text style={{
                             backgroundColor:'white',color:'#000',fontSize:20,
                             height:45,width:'100%',textAlign:'left',padding:10
                         }}>Sign Out</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={()=>Actions.OrderPopup()} style={{alignItems:'center',paddingTop:10,paddingBottom:10}}>
+                        <Text style={{
+                            backgroundColor:'white',color:'#000',fontSize:20,
+                            height:45,width:'100%',textAlign:'left',padding:10
+                        }}>Confirm</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={()=>Actions.Status()} style={{alignItems:'center',paddingTop:10,paddingBottom:10}}>
+                        <Text style={{
+                            backgroundColor:'white',color:'#000',fontSize:20,
+                            height:45,width:'100%',textAlign:'left',padding:10
+                        }}>Status</Text>
                     </TouchableOpacity>
                 </View>                
             </View>

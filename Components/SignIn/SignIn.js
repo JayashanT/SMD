@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
-import {Text,View,StyleSheet,TextInput,Image,TouchableOpacity,Alert,Linking,KeyboardAvoidingView} from 'react-native';
+import {Text,View,StyleSheet,TextInput,Image,TouchableOpacity,Alert,Linking,KeyboardAvoidingView,} from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import * as actions from '../Store/Actions/index';
 import {Field,reduxForm} from 'redux-form';
-import submit from './submit';
+import {store} from '../Store/Store';
 
 const renderField=({keyboardType,placeholder,secureTextEntry, meta:{touched,error,warning},input:{onChange, ...restInput}})=>{
     return(<View style={{flexDirection:'column',height:70,alignItems:'flex-start'}}>
@@ -15,6 +15,17 @@ const renderField=({keyboardType,placeholder,secureTextEntry, meta:{touched,erro
        </View>
     );
 }
+const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
+
+const submit=(values)=> {
+    return sleep(1000).then(() => {
+        let authData
+        authData={...values,returnSecureToken: true}
+        console.log(authData)
+        store.dispatch(actions.authVerify(authData));
+        //window.alert(`You submitted:\n\n${JSON.stringify(values, null, 2)}`)
+        }) 
+  }
 const required=value=> value ? undefined:'Required';
 const isValidEmail=value=> value && !/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/i.test(value) ? 'Invalid email address':undefined;
 
@@ -24,14 +35,6 @@ class ContactForm extends Component{
         state = {
         }
       }
-
-    handleSubmiting=()=>{
-        //onAuth(this.state.email,this.state.password);
-        Actions.Map();
-        this.props.onAuth(this.state.email,this.state.password)
-       
-        
-    }
     handleRegister=()=>{
         Alert.alert(
             'Register ? ',
@@ -96,11 +99,16 @@ class ContactForm extends Component{
                     <Field name="Password" keyboardType='default' placeholder='Password' secureTextEntry={true} component={renderField}
                         validate={[required]} 
                     />
-                    <TouchableOpacity onPress={handleSubmit(submit)} style={{margin:5,alignSelf:'stretch'}}>
+                    <TouchableOpacity onPress={handleSubmit(submit)} disabled={submitting} style={{marginLeft:5,marginRight:5,alignSelf:'stretch'}}>
                             <Text style={{
                                 backgroundColor:'steelblue',color:'white',fontSize:16,
                                 height:37,width:'100%',textAlign:'center',padding:10
                             }}>Log In</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={()=>this.handleRegister()} style={{margin:10,alignSelf:'stretch'}}>
+                        <Text style={{
+                            color:'steelBlue',fontSize:16,textAlign:'center',padding:10
+                        }}>Wanna Register as ShopMe Deliverer ? </Text>
                     </TouchableOpacity>
                 </View>
             </KeyboardAvoidingView>

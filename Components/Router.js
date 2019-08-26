@@ -8,6 +8,7 @@ import GetOrder from './GetOrder';
 import WrapupDeliver from './WrapupDeliver';
 import SideBar from './SideBar';
 import Signup from './SignIn/SignUp';
+import OrderPopup from './OrderPopup';
 
 const RouterComponent=()=>{
     return(
@@ -21,12 +22,13 @@ const RouterComponent=()=>{
                     drawerWidth={250}
                     drawerPosition="left"
                 >
-                <Scene key="login" component={SignIn} initial/*hideNavBar={true}*/ />
+                <Scene key="login" component={SignIn} /*hideNavBar={true}*/ />
                 <Scene key="Map" component={Map}/>
                 <Scene key="Profile" component={Profile}/>
-                <Scene key="Status" component={Status}/>
+                <Scene key="Status" component={Status} initial/>
                 <Scene key="GetOrder" component={GetOrder} />
                 <Scene key="SignUp" component={Signup} />
+                <Scene key="OrderPopup" component={OrderPopup} />
                 <Scene key="WrapupDeliver" component={WrapupDeliver} hideNavBar={true}/>
                 {/*
                 <Scene

@@ -31,27 +31,48 @@ export const logout=()=>{
     }
 }
 
-export const authVerify=(email,password)=>{
-    console.log(email,password)
+export const auth=(authData)=>{
     return dispatch=>{
         dispatch(authStart());
-        const authVerifyData={
-            email:email,
-            password:password,
-            returnSecureToken: true
-        };
-        
-        let url='https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyCustomToken?key=AIzaSyAH_1vanm5ZV02dvZSUnrlberVRRSBL3-k';
-        axios.get(url,authVerifyData)
+        console.log("auth : ",authData);
+        let url='';
+        {
+            console.log("seller");
+            url='https://localhost:5001/api/UserAuth/Signup-Seller';
+            axios.post(url,authData)
+                .then(response=>{
+            console.log(response);
+            dispatch(authSuccess(response.data.data.token,response.data.data.id));
+            dispatch(checkAuthTImeout(3600/*response.data.expiresIn*/));
+        })
+        .catch(err=>{
+            console.log(err);
+            dispatch(authFail(err));
+        });
+        }
+    }
+}
+
+
+export const authVerify=(authData)=>{
+    console.log(authData)
+    return dispatch=>{
+        dispatch(authStart());      
+        let url='https://backend-webapi20190825122524.azurewebsites.net/api/UserAuth/signin';
+        axios(
+           { method:'get',
+            url,
+            authData})
         .then(response=>{
            console.log(response);
             // localStorage.setItem('token',response.data.token);
             // localStorage.setItem('expirationDate',expirationDate);
             // localStorage.setItem('userId',response.data.localId);
-            dispatch(authSuccess(response.data.token,response.data.id));
+            dispatch(authSuccess(response.data.data.token,response.data.data.id));
         })
         .catch(err=>{
             console.log(err);
+            alert(err);
             dispatch(authFail(err));
         });
     };

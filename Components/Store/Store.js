@@ -13,5 +13,5 @@ const rootReducer=combineReducers({
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const logger=createLogger({diff:true,collapsed:true});
-
-export default createStore(rootReducer,composeEnhancers(applyMiddleware(logger,thunk)));
+store=createStore(rootReducer,composeEnhancers(applyMiddleware(logger,thunk)))
+export default store;

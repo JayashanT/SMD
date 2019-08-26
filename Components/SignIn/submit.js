@@ -1,6 +1,6 @@
 import { SubmissionError } from 'redux-form';
 import * as actions from '../Store/Actions/index';
-
+import {store} from '../Store/Store';
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
 
 const submit=(values)=> {
@@ -17,9 +17,23 @@ const submit=(values)=> {
     //     _error: 'Login failed!'
     //   })
     // } else {
-      actions.auth(values.Email,values.Password);
-      alert(`You submitted:\n\n${JSON.stringify(values, null, 2)}`)
+      let authData={
+        LoginVM:{
+          Email:values.Email,
+          Password:values.Password,
+          Role:"Seller"
+        },
+        FirstName:values.FirstName,
+        LastName:values.LastName,
+        MobileNumber:values.MobileNumber,
+        VehicleNo:values.VehicleNo,
+        VehicleType:values.VehicleType,
+        returnSecureToken: true,
+      }
       console.log(values);
+      store.dispatch(actions.auth(authData));
+      //alert(`You submitted:\n\n${JSON.stringify(values, null, 2)}`)
+      
       
  
        }) 
